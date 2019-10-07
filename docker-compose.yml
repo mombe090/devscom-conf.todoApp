@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  database:
+    image: mongo
+    restart: always
+    ports:
+      - 27018:27017
+    volumes:
+      - ./mongodb:/data/db
+
+  backend:
+    restart: on-failure
+    build:
+      context: ./backend
+    ports:
+      - '3000:3000'
+
+  client:
+    restart: on-failure
+    build:
+      context: ./frontend
+    ports:
+      - '4205:80'
+    volumes:
+      - ./logs/nginx:/var/log/nginx
+

@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  database:
+    image: mongo
+    ports:
+      - '27018:27017'
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  backend:
+    image: todo-app-back-img
+    ports:
+      - '3000:3000'
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  client:
+    image: todo-app-front-img
+    ports:
+      - '4205:80'
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
